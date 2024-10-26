@@ -38,7 +38,7 @@ const ProvideMainContext = () => {
 
         if (timeUntilExpiration > 0) {
             console.log('jwt valido');
-
+            setJwtToken(jwt);
             setIsLoggedIn(true);
         } else {
             console.log('jwt expirado');
