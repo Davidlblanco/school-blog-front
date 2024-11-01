@@ -23,10 +23,8 @@ const ProvideMainContext = () => {
     useEffect(() => {}, [jwtToken]);
     useEffect(() => {
         const jwt = getJwtCookie('school-blog-jwt');
-        console.log('jwt', jwt);
-        if (!jwt) {
-            console.log('jwt inexistente');
 
+        if (!jwt) {
             setIsLoggedIn(false);
             return;
         }
@@ -37,12 +35,9 @@ const ProvideMainContext = () => {
         const timeUntilExpiration = decoded.exp - currentTime;
 
         if (timeUntilExpiration > 0) {
-            console.log('jwt valido');
             setJwtToken(jwt);
             setIsLoggedIn(true);
         } else {
-            console.log('jwt expirado');
-
             setIsLoggedIn(false);
         }
     }, [jwtToken]);

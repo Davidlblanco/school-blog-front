@@ -2,20 +2,12 @@ import { useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component';
 import { apiUrl } from '../../utils/variables';
 import { useMainContext } from '../../contexts/useMainContext';
-
-interface Row {
-    active: boolean;
-    content: string;
-    creator_id: string;
-    date: string;
-    file: any;
-    filePath: string | null;
-    id: string;
-    title: string;
-}
+import { Article } from '../../typings/projectTypes';
+import { useNavigate } from 'react-router-dom';
 export default function List() {
+    const navigate = useNavigate();
     const { jwtToken } = useMainContext();
-    const [data, setData] = useState<Row[]>([]);
+    const [data, setData] = useState<Article[]>([]);
     const getArticles = async () => {
         const articles = await fetch(`${apiUrl}/articles`, {
             method: 'GET',
@@ -25,7 +17,7 @@ export default function List() {
             },
         });
         if (!articles.ok) return;
-        const articlesList: Row[] = await articles.json();
+        const articlesList: Article[] = await articles.json();
         setData(articlesList);
     };
     useEffect(() => {
@@ -33,10 +25,21 @@ export default function List() {
     }, []);
 
     const columns = data[0]
-        ? (Object.keys(data[0]) as (keyof Row)[]).map((item) => {
-              return { name: item, selector: (row: Row) => row[item] };
+        ? (Object.keys(data[0]) as (keyof Article)[]).map((item) => {
+              return {
+                  name: item,
+                  selector: (row: Article) => JSON.stringify(row[item]),
+              };
           })
         : [];
-
-    return <DataTable columns={columns} data={data} />;
+    function handleRowClick(row: Article) {
+        navigate(`/${row.id}`);
+    }
+    return (
+        <DataTable
+            columns={columns}
+            data={data}
+            onRowClicked={handleRowClick}
+        />
+    );
 }
