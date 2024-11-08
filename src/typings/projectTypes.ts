@@ -10,4 +10,5 @@ export interface Article {
     filePath: string | null;
     id: string;
     title: string;
+    creator: { name: string };
 }

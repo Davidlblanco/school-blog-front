@@ -23,6 +23,18 @@ export default function View() {
     useEffect(() => {
         getArticle();
     }, []);
-
-    return <pre>{JSON.stringify(article)}</pre>;
+    if (!article) return;
+    return (
+        <>
+            <h1>{article.title}</h1>
+            <div>
+                <p>{article.content}</p>
+                {article.filePath ? (
+                    <img src={article.filePath} alt={article.title}></img>
+                ) : null}
+            </div>
+            <p>{article.creator.name}</p>
+            <p>{article.date.split('T')[0]}</p>
+        </>
+    );
 }
