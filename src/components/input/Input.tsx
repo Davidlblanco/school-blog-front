@@ -32,7 +32,10 @@ export default function Input(props: InputProps) {
     const [error, setError] = useState(false);
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         try {
-            const finalValue = e.target.value;
+            let finalValue: any = e.target.value;
+            if (type === 'checkbox') {
+                finalValue = e.target.checked;
+            }
             set(finalValue);
         } catch (e) {
             console.log(e);

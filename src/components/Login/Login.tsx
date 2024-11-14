@@ -1,6 +1,6 @@
 import { useState, FormEvent } from 'react';
 import { jwtDecode } from 'jwt-decode';
-import Input from '../input/Input';
+import Input from '../Input/Input';
 import { apiUrl } from '../../utils/variables';
 import { useMainContext } from '../../contexts/useMainContext';
 import { JwtPayload } from '../../typings/projectTypes';

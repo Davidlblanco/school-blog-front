@@ -15,11 +15,19 @@ export type MainContextType = {
 
     isLoggedIn: boolean;
     setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+
+    contextError: string | undefined;
+    setContextError: React.Dispatch<React.SetStateAction<string | undefined>>;
+
+    contextSuccess: string | undefined;
+    setContextSuccess: React.Dispatch<React.SetStateAction<string | undefined>>;
 };
 
 const ProvideMainContext = () => {
     const [jwtToken, setJwtToken] = useState<string | undefined>();
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+    const [contextError, setContextError] = useState<string | undefined>();
+    const [contextSuccess, setContextSuccess] = useState<string | undefined>();
     useEffect(() => {}, [jwtToken]);
     useEffect(() => {
         const jwt = getJwtCookie('school-blog-jwt');
@@ -46,6 +54,10 @@ const ProvideMainContext = () => {
         setJwtToken,
         isLoggedIn,
         setIsLoggedIn,
+        contextError,
+        setContextError,
+        contextSuccess,
+        setContextSuccess,
     };
 };
 
