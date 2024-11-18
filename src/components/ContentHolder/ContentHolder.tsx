@@ -3,6 +3,7 @@ import List from '../List/List';
 import View from '../View/View';
 import CreateUpdate from '../CreateUpdate/CreateUpdate';
 import Toast from '../../utils/Toast';
+import Header from '../header/Header';
 const router = createBrowserRouter([
     {
         path: '/',
@@ -24,7 +25,8 @@ const router = createBrowserRouter([
 export default function ContentHolder() {
     return (
         <>
-            <RouterProvider router={router} />
+            <Header />
+            <RouterProvider router={router}></RouterProvider>
             <Toast />
         </>
     );

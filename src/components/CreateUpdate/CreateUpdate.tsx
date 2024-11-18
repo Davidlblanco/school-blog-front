@@ -105,21 +105,3 @@ export default function CreateUpdate() {
         </>
     );
 }
-
-// interface InputProps {
-//     label: string;
-//     type: string;
-//     value: any;
-//     set: React.Dispatch<React.SetStateAction<any>>;
-
-// export interface Article {
-//     active: boolean;
-//     content: string;
-//     creator_id: string;
-//     date: string;
-//     file: any;
-//     filePath: string | null;
-//     id: string;
-//     title: string;
-//     creator: { name: string };
-// }
