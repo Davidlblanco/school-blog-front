@@ -4,19 +4,34 @@ import { apiUrl } from '../../utils/variables';
 import { useMainContext } from '../../contexts/useMainContext';
 import { Article } from '../../typings/projectTypes';
 import { useNavigate } from 'react-router-dom';
+import Search from '../Search/Search';
+import UseDebounce from '../../utils/UseDebounce';
 
 export default function List() {
     const navigate = useNavigate();
-    const { jwtToken } = useMainContext();
+    const { jwtToken, search } = useMainContext();
     const [data, setData] = useState<Article[]>([]);
     const getArticles = async () => {
-        const articles = await fetch(`${apiUrl}/articles?rows=true`, {
-            method: 'GET',
-            headers: {
-                Authorization: `Bearer ${jwtToken}`,
-                'Content-Type': 'application/json',
+        const articles = await fetch(
+            `${apiUrl}/articles?rows=true${
+                search
+                    ? `&where={
+                            "OR":[
+                                {"title":{"contains":"${search}","mode":"insensitive"}},
+                                {"content":{"contains":"${search}","mode":"insensitive"}},
+                                {"creator":{"name":{"contains":"${search}","mode":"insensitive"}}}
+                            ]
+                        }`
+                    : ''
+            }`,
+            {
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${jwtToken}`,
+                    'Content-Type': 'application/json',
+                },
             },
-        });
+        );
         if (!articles.ok) return;
         const articlesList: Article[] = await articles.json();
         setData(articlesList);
@@ -24,6 +39,11 @@ export default function List() {
     useEffect(() => {
         getArticles();
     }, []);
+
+    const debounceSearch = UseDebounce(() => getArticles(), 1000);
+    useEffect(() => {
+        debounceSearch();
+    }, [search]);
 
     const handleUpdateClick = (articleId: string) => {
         navigate(`/updateArticle/${articleId}`);
@@ -60,8 +80,10 @@ export default function List() {
     function handleRowClick(row: Article) {
         navigate(`/${row.id}`);
     }
+
     return (
         <>
+            <Search />
             <button onClick={handleCreateClick}>create</button>
             <DataTable
                 columns={columns}

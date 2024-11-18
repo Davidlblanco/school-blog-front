@@ -5,7 +5,7 @@ export default function Header() {
     function handleLogOut() {
         document.cookie =
             'school-blog-jwt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-        setJwtToken('');
+        setJwtToken(undefined);
     }
     return (
         <div>
