@@ -28,14 +28,18 @@ export default function List() {
     const handleUpdateClick = (articleId: string) => {
         navigate(`/updateArticle/${articleId}`);
     };
-
+    const columnsToRender = ['title', 'content'];
     const columns = [
         ...(data[0]
-            ? (Object.keys(data[0]) as (keyof Article)[]).map((item) => ({
+            ? columnsToRender.map((item) => ({
                   name: item,
-                  selector: (row: Article) => JSON.stringify(row[item]),
+                  selector: (row: any) => row[item],
               }))
             : []),
+        {
+            name: 'name',
+            selector: (row: Article) => row['creator'].name,
+        },
         {
             name: 'Actions',
             cell: (row: Article) => (
