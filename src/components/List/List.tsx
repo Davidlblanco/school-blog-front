@@ -41,9 +41,7 @@ export default function List() {
     }, []);
 
     const debounceSearch = UseDebounce(() => getArticles(), 1000);
-    useEffect(() => {
-        debounceSearch();
-    }, [search]);
+    useEffect(debounceSearch, [search]);
 
     const handleUpdateClick = (articleId: string) => {
         navigate(`/updateArticle/${articleId}`);
