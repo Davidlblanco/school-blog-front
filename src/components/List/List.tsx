@@ -6,10 +6,11 @@ import { Article } from '../../typings/projectTypes';
 import { useNavigate } from 'react-router-dom';
 import Search from '../Search/Search';
 import UseDebounce from '../../utils/UseDebounce';
+import ModalRemoveItem from '../ModalRemoveItem/ModalRemoveItem';
 
 export default function List() {
     const navigate = useNavigate();
-    const { jwtToken, search, setSearch } = useMainContext();
+    const { jwtToken, search, setSearch, setOpenModalId } = useMainContext();
     const [data, setData] = useState<Article[]>([]);
     const getArticles = async () => {
         const articles = await fetch(
@@ -46,6 +47,14 @@ export default function List() {
     const handleUpdateClick = (articleId: string) => {
         navigate(`/updateArticle/${articleId}`);
     };
+    const handleRemoveClick = (articleId: string) => {
+        setOpenModalId(articleId);
+    };
+    const handleDeleteSuccess = (articleId: string) => {
+        setData((prevData) =>
+            prevData.filter((article) => article.id !== articleId),
+        );
+    };
     const columnsToRender = ['title', 'content'];
     const columns = [
         ...(data[0]
@@ -59,7 +68,7 @@ export default function List() {
             selector: (row: Article) => row['creator'].name,
         },
         {
-            name: 'Actions',
+            name: 'Update',
             cell: (row: Article) => (
                 <button
                     onClick={(e) => {
@@ -69,6 +78,21 @@ export default function List() {
                 >
                     Update
                 </button>
+            ),
+        },
+        {
+            name: 'Remove',
+            cell: (row: Article) => (
+                <>
+                    <button onClick={() => handleRemoveClick(row.id)}>
+                        Remove
+                    </button>
+                    <ModalRemoveItem
+                        id={row.id}
+                        type={'article'}
+                        onDeleteSuccess={() => handleDeleteSuccess(row.id)}
+                    />
+                </>
             ),
         },
     ];

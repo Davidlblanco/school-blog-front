@@ -6,10 +6,12 @@ import { useEffect, useState } from 'react';
 import UseDebounce from '../../utils/UseDebounce';
 import DataTable from 'react-data-table-component';
 import Search from '../Search/Search';
+import ModalRemoveItem from '../ModalRemoveItem/ModalRemoveItem';
 
 export default function ListUsers() {
     const navigate = useNavigate();
-    const { jwtToken, searchUser, setSearchUser } = useMainContext();
+    const { jwtToken, searchUser, setSearchUser, setOpenModalId } =
+        useMainContext();
     const [data, setData] = useState<User[]>([]);
 
     const getUsers = async () => {
@@ -49,6 +51,15 @@ export default function ListUsers() {
         navigate(`/admin/UpdateUser/${userId}`);
     };
 
+    const handleRemoveClick = (userId: string) => {
+        setOpenModalId(userId);
+    };
+    const handleDeleteSuccess = (articleId: string) => {
+        setData((prevData) =>
+            prevData.filter((article) => article.id !== articleId),
+        );
+    };
+
     const columnsToRender = ['name', 'email', 'userName', 'type'];
     const columns = [
         ...(data[0]
@@ -58,7 +69,7 @@ export default function ListUsers() {
               }))
             : []),
         {
-            name: 'Actions',
+            name: 'Update',
             cell: (row: User) => (
                 <button
                     onClick={(e) => {
@@ -68,6 +79,21 @@ export default function ListUsers() {
                 >
                     Update
                 </button>
+            ),
+        },
+        {
+            name: 'Remove',
+            cell: (row: User) => (
+                <>
+                    <button onClick={() => handleRemoveClick(row.id)}>
+                        Remove
+                    </button>
+                    <ModalRemoveItem
+                        id={row.id}
+                        type={'user'}
+                        onDeleteSuccess={() => handleDeleteSuccess(row.id)}
+                    />
+                </>
             ),
         },
     ];

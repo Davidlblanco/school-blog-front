@@ -27,6 +27,9 @@ export type MainContextType = {
 
     searchUser: string;
     setSearchUser: React.Dispatch<React.SetStateAction<string>>;
+
+    openModalId: string;
+    setOpenModalId: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const ProvideMainContext = () => {
@@ -36,6 +39,7 @@ const ProvideMainContext = () => {
     const [contextSuccess, setContextSuccess] = useState<string | undefined>();
     const [search, setSearch] = useState<string>('');
     const [searchUser, setSearchUser] = useState<string>('');
+    const [openModalId, setOpenModalId] = useState<string>('');
 
     useEffect(() => {}, [jwtToken]);
     useEffect(() => {
@@ -71,6 +75,8 @@ const ProvideMainContext = () => {
         setSearch,
         searchUser,
         setSearchUser,
+        openModalId,
+        setOpenModalId,
     };
 };
 
