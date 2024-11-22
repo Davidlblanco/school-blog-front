@@ -30,6 +30,8 @@ export type MainContextType = {
 
     openModalId: string;
     setOpenModalId: React.Dispatch<React.SetStateAction<string>>;
+
+    role: string;
 };
 
 const ProvideMainContext = () => {
@@ -40,6 +42,7 @@ const ProvideMainContext = () => {
     const [search, setSearch] = useState<string>('');
     const [searchUser, setSearchUser] = useState<string>('');
     const [openModalId, setOpenModalId] = useState<string>('');
+    const [role, setRole] = useState<string>('');
 
     useEffect(() => {}, [jwtToken]);
     useEffect(() => {
@@ -61,7 +64,14 @@ const ProvideMainContext = () => {
         } else {
             setIsLoggedIn(false);
         }
+        setRole(getRoleFromJwt());
     }, [jwtToken]);
+
+    const getRoleFromJwt = (): string => {
+        if (!jwtToken) return '';
+        const decoded: any = jwtDecode(jwtToken);
+        return decoded.role || '';
+    };
     return {
         jwtToken,
         setJwtToken,
@@ -77,6 +87,7 @@ const ProvideMainContext = () => {
         setSearchUser,
         openModalId,
         setOpenModalId,
+        role,
     };
 };
 

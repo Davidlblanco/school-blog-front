@@ -4,6 +4,7 @@ import Input from '../Input/Input';
 import { useMainContext } from '../../contexts/useMainContext';
 import { apiUrl } from '../../utils/variables';
 import { User, UserType } from '../../typings/projectTypes';
+import AccessDenied from '../AccessDenied/AccessDenied';
 
 export default function CreateUpdateUser() {
     const [active, setActive] = useState(false);
@@ -11,7 +12,8 @@ export default function CreateUpdateUser() {
     const [email, setEmail] = useState('');
     const [userName, setUserName] = useState('');
     const [type, setType] = useState<UserType>('STUDENT');
-    const { jwtToken, setContextError, setContextSuccess } = useMainContext();
+    const { jwtToken, setContextError, setContextSuccess, role } =
+        useMainContext();
     const { id } = useParams();
 
     function createHeaders() {
@@ -77,6 +79,7 @@ export default function CreateUpdateUser() {
         setInitialParameters();
     }, [id]);
 
+    if (role !== 'ADMIN') return <AccessDenied />;
     return (
         <>
             <form onSubmit={handleSubmit}>

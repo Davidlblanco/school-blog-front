@@ -4,13 +4,15 @@ import Input from '../Input/Input';
 import { useMainContext } from '../../contexts/useMainContext';
 import { apiUrl } from '../../utils/variables';
 import { Article } from '../../typings/projectTypes';
+import AccessDenied from '../AccessDenied/AccessDenied';
 
 export default function CreateUpdate() {
     const [active, setActive] = useState(false);
     const [content, setContent] = useState('');
     const [title, setTitle] = useState('');
     const [imageUrl, setImageUrl] = useState('');
-    const { jwtToken, setContextError, setContextSuccess } = useMainContext();
+    const { jwtToken, setContextError, setContextSuccess, role } =
+        useMainContext();
     const { id } = useParams();
 
     function createHeaders() {
@@ -71,6 +73,8 @@ export default function CreateUpdate() {
         if (!id) return;
         setInitialParameters();
     }, []);
+
+    if (role !== 'ADMIN' && role !== 'TEACHER') return <AccessDenied />;
     return (
         <>
             <form onSubmit={handleSubmit}>

@@ -10,7 +10,9 @@ import ModalRemoveItem from '../ModalRemoveItem/ModalRemoveItem';
 
 export default function List() {
     const navigate = useNavigate();
-    const { jwtToken, search, setSearch, setOpenModalId } = useMainContext();
+    const { jwtToken, search, setSearch, setOpenModalId, role } =
+        useMainContext();
+
     const [data, setData] = useState<Article[]>([]);
     const getArticles = async () => {
         const articles = await fetch(
@@ -55,6 +57,43 @@ export default function List() {
             prevData.filter((article) => article.id !== articleId),
         );
     };
+
+    const adminTeacherColumns =
+        role === 'ADMIN' || role === 'TEACHER'
+            ? [
+                  {
+                      name: 'Update',
+                      cell: (row: Article) => (
+                          <button
+                              onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleUpdateClick(row.id);
+                              }}
+                          >
+                              Update
+                          </button>
+                      ),
+                  },
+                  {
+                      name: 'Remove',
+                      cell: (row: Article) => (
+                          <>
+                              <button onClick={() => handleRemoveClick(row.id)}>
+                                  Remove
+                              </button>
+                              <ModalRemoveItem
+                                  id={row.id}
+                                  type={'article'}
+                                  onDeleteSuccess={() =>
+                                      handleDeleteSuccess(row.id)
+                                  }
+                              />
+                          </>
+                      ),
+                  },
+              ]
+            : [];
+
     const columnsToRender = ['title', 'content'];
     const columns = [
         ...(data[0]
@@ -67,34 +106,7 @@ export default function List() {
             name: 'name',
             selector: (row: Article) => row['creator'].name,
         },
-        {
-            name: 'Update',
-            cell: (row: Article) => (
-                <button
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        handleUpdateClick(row.id);
-                    }}
-                >
-                    Update
-                </button>
-            ),
-        },
-        {
-            name: 'Remove',
-            cell: (row: Article) => (
-                <>
-                    <button onClick={() => handleRemoveClick(row.id)}>
-                        Remove
-                    </button>
-                    <ModalRemoveItem
-                        id={row.id}
-                        type={'article'}
-                        onDeleteSuccess={() => handleDeleteSuccess(row.id)}
-                    />
-                </>
-            ),
-        },
+        ...adminTeacherColumns,
     ];
     const handleCreateClick = () => {
         navigate(`/createArticle/`);
@@ -106,7 +118,9 @@ export default function List() {
     return (
         <>
             <Search value={search} set={setSearch} />
-            <button onClick={handleCreateClick}>create</button>
+            {(role === 'ADMIN' || role === 'TEACHER') && (
+                <button onClick={handleCreateClick}>create</button>
+            )}
             <DataTable
                 columns={columns}
                 data={data}

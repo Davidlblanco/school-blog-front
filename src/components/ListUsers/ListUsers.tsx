@@ -7,10 +7,11 @@ import UseDebounce from '../../utils/UseDebounce';
 import DataTable from 'react-data-table-component';
 import Search from '../Search/Search';
 import ModalRemoveItem from '../ModalRemoveItem/ModalRemoveItem';
+import AccessDenied from '../AccessDenied/AccessDenied';
 
 export default function ListUsers() {
     const navigate = useNavigate();
-    const { jwtToken, searchUser, setSearchUser, setOpenModalId } =
+    const { jwtToken, searchUser, setSearchUser, setOpenModalId, role } =
         useMainContext();
     const [data, setData] = useState<User[]>([]);
 
@@ -105,7 +106,7 @@ export default function ListUsers() {
     function handleRowClick(row: User) {
         navigate(`/admin/UpdateUser/${row.id}`);
     }
-
+    if (role !== 'ADMIN') return <AccessDenied />;
     return (
         <>
             <Search value={searchUser} set={setSearchUser} />
