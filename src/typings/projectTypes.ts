@@ -12,3 +12,15 @@ export interface Article {
     title: string;
     creator: { name: string };
 }
+
+export interface User {
+    id: string;
+    name: string;
+    email: string;
+    userName: string;
+    active: boolean;
+    type: UserType;
+    articles: Article[];
+    password?: string;
+}
+export type UserType = 'ADMIN' | 'TEACHER' | 'STUDENT';

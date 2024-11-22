@@ -9,7 +9,7 @@ import UseDebounce from '../../utils/UseDebounce';
 
 export default function List() {
     const navigate = useNavigate();
-    const { jwtToken, search } = useMainContext();
+    const { jwtToken, search, setSearch } = useMainContext();
     const [data, setData] = useState<Article[]>([]);
     const getArticles = async () => {
         const articles = await fetch(
@@ -81,7 +81,7 @@ export default function List() {
 
     return (
         <>
-            <Search />
+            <Search value={search} set={setSearch} />
             <button onClick={handleCreateClick}>create</button>
             <DataTable
                 columns={columns}

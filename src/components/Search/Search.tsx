@@ -1,14 +1,9 @@
-import { useMainContext } from '../../contexts/useMainContext';
 import Input from '../Input/Input';
-
-export default function Search() {
-    const { search, setSearch } = useMainContext();
-    return (
-        <Input
-            type="text"
-            set={setSearch}
-            value={search}
-            label="search"
-        ></Input>
-    );
+interface SearchProps {
+    value: string;
+    set: React.Dispatch<React.SetStateAction<string>>;
+}
+export default function Search(props: SearchProps) {
+    const { value, set } = props;
+    return <Input type="text" set={set} value={value} label="search"></Input>;
 }

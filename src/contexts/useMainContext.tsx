@@ -22,8 +22,11 @@ export type MainContextType = {
     contextSuccess: string | undefined;
     setContextSuccess: React.Dispatch<React.SetStateAction<string | undefined>>;
 
-    search: string | undefined;
-    setSearch: React.Dispatch<React.SetStateAction<string | undefined>>;
+    search: string;
+    setSearch: React.Dispatch<React.SetStateAction<string>>;
+
+    searchUser: string;
+    setSearchUser: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const ProvideMainContext = () => {
@@ -31,7 +34,9 @@ const ProvideMainContext = () => {
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
     const [contextError, setContextError] = useState<string | undefined>();
     const [contextSuccess, setContextSuccess] = useState<string | undefined>();
-    const [search, setSearch] = useState<string | undefined>();
+    const [search, setSearch] = useState<string>('');
+    const [searchUser, setSearchUser] = useState<string>('');
+
     useEffect(() => {}, [jwtToken]);
     useEffect(() => {
         const jwt = getJwtCookie('school-blog-jwt');
@@ -64,6 +69,8 @@ const ProvideMainContext = () => {
         setContextSuccess,
         search,
         setSearch,
+        searchUser,
+        setSearchUser,
     };
 };
 
