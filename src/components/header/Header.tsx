@@ -1,7 +1,7 @@
 import { useMainContext } from '../../contexts/useMainContext';
 
 export default function Header() {
-    const { setJwtToken } = useMainContext();
+    const { setJwtToken, role } = useMainContext();
 
     function handleLogOut() {
         document.cookie =
@@ -9,10 +9,26 @@ export default function Header() {
         setJwtToken(undefined);
     }
     return (
-        <div>
-            <a href="/">Logo</a>
-            <button onClick={handleLogOut}>LogOut</button>
-            <a href="/myAccount">Minha Conta</a>
-        </div>
+        <header className="bg-gray-800 text-white p-4 flex justify-between items-center">
+            <a href="/" className="text-xl font-bold">
+                Logo
+            </a>
+            <nav className="space-x-4">
+                {role === 'ADMIN' ? (
+                    <a href="/admin/ListUsers" className="hover:underline">
+                        Admin
+                    </a>
+                ) : null}
+                <a href="/myAccount" className="hover:underline">
+                    Minha Conta
+                </a>
+                <button
+                    onClick={handleLogOut}
+                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                >
+                    LogOut
+                </button>
+            </nav>
+        </header>
     );
 }

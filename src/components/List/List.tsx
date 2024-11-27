@@ -69,6 +69,7 @@ export default function List() {
                                   e.stopPropagation();
                                   handleUpdateClick(row.id);
                               }}
+                              className="text-blue-500 hover:underline"
                           >
                               Update
                           </button>
@@ -78,7 +79,10 @@ export default function List() {
                       name: 'Remove',
                       cell: (row: Article) => (
                           <>
-                              <button onClick={() => handleRemoveClick(row.id)}>
+                              <button
+                                  onClick={() => handleRemoveClick(row.id)}
+                                  className="text-red-500 hover:underline"
+                              >
                                   Remove
                               </button>
                               <ModalRemoveItem
@@ -116,16 +120,22 @@ export default function List() {
     }
 
     return (
-        <>
+        <div className="p-4">
             <Search value={search} set={setSearch} />
             {(role === 'ADMIN' || role === 'TEACHER') && (
-                <button onClick={handleCreateClick}>create</button>
+                <button
+                    onClick={handleCreateClick}
+                    className="mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+                >
+                    Create
+                </button>
             )}
             <DataTable
                 columns={columns}
                 data={data}
                 onRowClicked={handleRowClick}
+                className="bg-white shadow-md rounded"
             />
-        </>
+        </div>
     );
 }

@@ -76,11 +76,11 @@ export default function CreateUpdate() {
 
     if (role !== 'ADMIN' && role !== 'TEACHER') return <AccessDenied />;
     return (
-        <>
-            <form onSubmit={handleSubmit}>
+        <div className="p-4 bg-white rounded shadow-md m-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
                 <Input
                     type="checkbox"
-                    label="status"
+                    label="Status"
                     value={active}
                     set={setActive}
                 />
@@ -93,7 +93,7 @@ export default function CreateUpdate() {
                 />
                 <Input
                     type="textarea"
-                    label="conteúdo"
+                    label="Conteúdo"
                     value={content}
                     set={setContent}
                     required
@@ -104,8 +104,13 @@ export default function CreateUpdate() {
                     value={imageUrl}
                     set={setImageUrl}
                 />
-                <button>Enviar</button>
+                <button
+                    type="submit"
+                    className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+                >
+                    Enviar
+                </button>
             </form>
-        </>
+        </div>
     );
 }

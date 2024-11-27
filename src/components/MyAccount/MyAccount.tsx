@@ -91,42 +91,48 @@ export default function MyAccount() {
         setContextSuccess(`Usuário atualizado com sucesso!`);
     }
     return (
-        <form onSubmit={handleSubmit}>
-            {' '}
-            <Input
-                type="text"
-                label="Nome"
-                value={name}
-                set={setName}
-                required
-            />
-            <Input
-                type="email"
-                label="Email"
-                value={email}
-                set={setEmail}
-                required
-            />
-            <Input
-                type="text"
-                label="Nome de usuário"
-                value={userName}
-                set={setUserName}
-                required
-            />
-            <Input
-                type="text"
-                label="Nova senha"
-                value={userPassword}
-                set={setUserPassword}
-            />
-            <Input
-                type="text"
-                label="Confirmar nova senha"
-                value={confirmPassword}
-                set={setConfirmPassword}
-            />
-            <button>Save</button>
-        </form>
+        <div className="p-4 bg-white rounded shadow-md m-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
+                <Input
+                    type="text"
+                    label="Nome"
+                    value={name}
+                    set={setName}
+                    required
+                />
+                <Input
+                    type="email"
+                    label="Email"
+                    value={email}
+                    set={setEmail}
+                    required
+                />
+                <Input
+                    type="text"
+                    label="Nome de usuário"
+                    value={userName}
+                    set={setUserName}
+                    required
+                />
+                <Input
+                    type="password"
+                    label="Nova senha"
+                    value={userPassword}
+                    set={setUserPassword}
+                />
+                <Input
+                    type="password"
+                    label="Confirmar nova senha"
+                    value={confirmPassword}
+                    set={setConfirmPassword}
+                />
+                <button
+                    type="submit"
+                    className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+                >
+                    Save
+                </button>
+            </form>
+        </div>
     );
 }

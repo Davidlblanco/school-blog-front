@@ -25,16 +25,20 @@ export default function View() {
     }, []);
     if (!article) return;
     return (
-        <>
-            <h1>{article.title}</h1>
-            <div>
-                <p>{article.content}</p>
+        <div className="p-4">
+            <h1 className="text-3xl font-bold mb-4">{article.title}</h1>
+            <div className="mb-4">
+                <p className="text-gray-700">{article.content}</p>
                 {article.filePath ? (
-                    <img src={article.filePath} alt={article.title}></img>
+                    <img
+                        src={article.filePath}
+                        alt={article.title}
+                        className="mt-4 rounded"
+                    />
                 ) : null}
             </div>
-            <p>{article.creator.name}</p>
-            <p>{article.date.split('T')[0]}</p>
-        </>
+            <p className="text-gray-500">By {article.creator.name}</p>
+            <p className="text-gray-500">{article.date.split('T')[0]}</p>
+        </div>
     );
 }

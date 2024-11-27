@@ -81,8 +81,8 @@ export default function CreateUpdateUser() {
 
     if (role !== 'ADMIN') return <AccessDenied />;
     return (
-        <>
-            <form onSubmit={handleSubmit}>
+        <div className="p-4 bg-white rounded shadow-md  m-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
                 <Input
                     type="checkbox"
                     label="Status"
@@ -110,20 +110,28 @@ export default function CreateUpdateUser() {
                     set={setUserName}
                     required
                 />
-                <label>
-                    <p>Tipo</p>
+                <label className="block mb-4">
+                    <p className="mb-2 text-sm font-medium text-gray-700">
+                        Tipo
+                    </p>
                     <select
                         value={type}
                         onChange={(e) => setType(e.target.value as UserType)}
                         required
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                     >
                         <option value="ADMIN">Admin</option>
                         <option value="TEACHER">Teacher</option>
                         <option value="STUDENT">Student</option>
                     </select>
                 </label>
-                <button>Enviar</button>
+                <button
+                    type="submit"
+                    className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+                >
+                    Enviar
+                </button>
             </form>
-        </>
+        </div>
     );
 }

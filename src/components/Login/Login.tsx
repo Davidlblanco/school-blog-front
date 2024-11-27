@@ -39,25 +39,28 @@ export default function Login() {
         document.cookie = `school-blog-jwt=${accessToken}; path=/; secure; samesite=strict; max-age=${timeUntilExpiration}`;
     };
     return (
-        <>
-            <form onSubmit={handleSubmit}>
-                <Input
-                    label="Usuário"
-                    type="text"
-                    set={setUserName}
-                    value={userName}
-                    required
-                />
-                <Input
-                    label="Senha"
-                    type="text"
-                    set={setPassword}
-                    value={password}
-                    required
-                />
-                <button>Login</button>
-            </form>
-            {errorMessage ? <p>{errorMessage}</p> : null}
-        </>
+        <div className="flex items-center justify-center min-h-screen bg-gray-100">
+            <div className="w-full max-w-md p-8 space-y-6 bg-white rounded shadow-md">
+                <h2 className="text-2xl font-bold text-center">Login</h2>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                    <Input
+                        label="Usuário"
+                        type="text"
+                        set={setUserName}
+                        value={userName}
+                        required
+                    />
+                    <Input
+                        label="Senha"
+                        type="text"
+                        set={setPassword}
+                        value={password}
+                        required
+                    />
+                    <button>Login</button>
+                </form>
+                {errorMessage ? <p>{errorMessage}</p> : null}
+            </div>
+        </div>
     );
 }

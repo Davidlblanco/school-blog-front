@@ -45,11 +45,23 @@ export default function ModalRemoveItem(props: ModalProps) {
 
     if (openModalId !== id) return null;
     return (
-        <div>
-            <div>
-                <p>{`Are you shure you want to remove this ${type}?`}</p>
-                <button onClick={handleDelete}>yes</button>
-                <button onClick={() => setOpenModalId('')}>no</button>
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+            <div className="bg-white p-6 rounded shadow-lg">
+                <p className="mb-4">{`Are you sure you want to remove this ${type}?`}</p>
+                <div className="flex justify-end space-x-4">
+                    <button
+                        onClick={handleDelete}
+                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                        Yes
+                    </button>
+                    <button
+                        onClick={() => setOpenModalId('')}
+                        className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                        No
+                    </button>
+                </div>
             </div>
         </div>
     );
