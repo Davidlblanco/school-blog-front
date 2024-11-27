@@ -15,18 +15,20 @@ export default function List() {
 
     const [data, setData] = useState<Article[]>([]);
     const getArticles = async () => {
+        const activeFilter = role === 'STUDENT' ? `{"active":true}` : '{}';
+        const searchFilter = search
+            ? `&where={
+                    "OR":[
+                        {"title":{"contains":"${search}","mode":"insensitive"}},
+                        {"content":{"contains":"${search}","mode":"insensitive"}},
+                        {"creator":{"name":{"contains":"${search}","mode":"insensitive"}}}
+                    ],
+                    "AND": [${activeFilter}]
+                }`
+            : `&where={"AND": [${activeFilter}]}`;
+
         const articles = await fetch(
-            `${apiUrl}/articles?rows=true${
-                search
-                    ? `&where={
-                            "OR":[
-                                {"title":{"contains":"${search}","mode":"insensitive"}},
-                                {"content":{"contains":"${search}","mode":"insensitive"}},
-                                {"creator":{"name":{"contains":"${search}","mode":"insensitive"}}}
-                            ]
-                        }`
-                    : ''
-            }`,
+            `${apiUrl}/articles?rows=true${searchFilter}`,
             {
                 method: 'GET',
                 headers: {
@@ -135,6 +137,20 @@ export default function List() {
                 data={data}
                 onRowClicked={handleRowClick}
                 className="bg-white shadow-md rounded"
+                conditionalRowStyles={[
+                    {
+                        when: (row) => row.active,
+                        style: {
+                            backgroundColor: 'white',
+                        },
+                    },
+                    {
+                        when: (row) => !row.active,
+                        style: {
+                            backgroundColor: '#ffcccc',
+                        },
+                    },
+                ]}
             />
         </div>
     );

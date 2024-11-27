@@ -125,6 +125,20 @@ export default function ListUsers() {
                 data={data}
                 onRowClicked={handleRowClick}
                 className="bg-white shadow-md rounded"
+                conditionalRowStyles={[
+                    {
+                        when: (row) => row.active,
+                        style: {
+                            backgroundColor: 'white',
+                        },
+                    },
+                    {
+                        when: (row) => !row.active,
+                        style: {
+                            backgroundColor: '#ffcccc',
+                        },
+                    },
+                ]}
             />
         </div>
     );
