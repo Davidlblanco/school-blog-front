@@ -6,6 +6,7 @@ import Toast from '../../utils/Toast';
 import Header from '../header/Header';
 import ListUsers from '../ListUsers/ListUsers';
 import CreateUpdateUser from '../CreateUser/CreateUpdateUser';
+import MyAccount from '../MyAccount/MyAccount';
 const router = createBrowserRouter([
     {
         path: '/',
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
     {
         path: '/admin/CreateUser',
         element: <CreateUpdateUser />,
+    },
+    {
+        path: '/myAccount',
+        element: <MyAccount />,
     },
 ]);
 export default function ContentHolder() {
