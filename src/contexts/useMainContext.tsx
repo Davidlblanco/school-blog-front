@@ -64,13 +64,12 @@ const ProvideMainContext = () => {
         } else {
             setIsLoggedIn(false);
         }
-        setRole(getRoleFromJwt());
+        getRoleFromJwt(jwt);
     }, [jwtToken]);
 
-    const getRoleFromJwt = (): string => {
-        if (!jwtToken) return '';
-        const decoded: any = jwtDecode(jwtToken);
-        return decoded.role || '';
+    const getRoleFromJwt = (jwt: string) => {
+        const decoded: any = jwtDecode(jwt);
+        setRole(decoded.role);
     };
     return {
         jwtToken,
