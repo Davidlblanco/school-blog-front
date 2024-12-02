@@ -44,10 +44,12 @@ export default function Input(props: InputProps) {
     };
     return (
         <label className="block mb-4">
-            <p className="mb-2 text-sm font-medium text-gray-700">
-                {label}
-                {required ? '*' : null}
-            </p>
+            {label !== '' && (
+                <p className="mb-2 text-sm font-medium text-gray-700">
+                    {label}
+                    {required ? '*' : null}
+                </p>
+            )}
             <input
                 type={type}
                 onError={() => console.log('error')}

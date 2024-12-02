@@ -39,9 +39,11 @@ export default function Login() {
         document.cookie = `school-blog-jwt=${accessToken}; path=/; secure; samesite=strict; max-age=${timeUntilExpiration}`;
     };
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <div className="flex items-center justify-center min-h-screen bg-gray-800">
             <div className="w-full max-w-md p-8 space-y-6 bg-white rounded shadow-md">
-                <h2 className="text-2xl font-bold text-center">Login</h2>
+                <h2 className="text-2xl font-bold text-center text-gray-800">
+                    Logo
+                </h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <Input
                         label="User name"
@@ -57,7 +59,11 @@ export default function Login() {
                         value={password}
                         required
                     />
-                    <button>Login</button>
+                    <div className="flex justify-end">
+                        <button className="mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">
+                            Login
+                        </button>
+                    </div>
                 </form>
                 {errorMessage ? <p>{errorMessage}</p> : null}
             </div>

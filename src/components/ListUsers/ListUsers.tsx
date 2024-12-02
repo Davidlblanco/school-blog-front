@@ -67,7 +67,7 @@ export default function ListUsers() {
     const columns = [
         ...(data[0]
             ? columnsToRender.map((item) => ({
-                  name: item,
+                  name: item.charAt(0).toUpperCase() + item.slice(1),
                   selector: (row: any) =>
                       item === 'active'
                           ? row[item]
@@ -121,13 +121,15 @@ export default function ListUsers() {
     if (role !== 'ADMIN') return <AccessDenied />;
     return (
         <div className="p-4">
-            <Search value={searchUser} set={setSearchUser} />
-            <button
-                onClick={handleCreateClick}
-                className="mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
-            >
-                Create
-            </button>
+            <div className="flex">
+                <Search value={searchUser} set={setSearchUser} />
+                <button
+                    onClick={handleCreateClick}
+                    className="ml-4 mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+                >
+                    Create
+                </button>
+            </div>
             <DataTable
                 columns={columns}
                 data={data}
