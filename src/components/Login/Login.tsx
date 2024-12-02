@@ -44,15 +44,15 @@ export default function Login() {
                 <h2 className="text-2xl font-bold text-center">Login</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <Input
-                        label="Usuário"
+                        label="User name"
                         type="text"
                         set={setUserName}
                         value={userName}
                         required
                     />
                     <Input
-                        label="Senha"
-                        type="text"
+                        label="Password"
+                        type="password"
                         set={setPassword}
                         value={password}
                         required

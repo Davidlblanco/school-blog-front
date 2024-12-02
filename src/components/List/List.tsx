@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import Search from '../Search/Search';
 import UseDebounce from '../../utils/UseDebounce';
 import ModalRemoveItem from '../ModalRemoveItem/ModalRemoveItem';
+import { check, unCheck } from '../../utils/Icons';
 
 export default function List() {
     const navigate = useNavigate();
@@ -26,9 +27,10 @@ export default function List() {
                     "AND": [${activeFilter}]
                 }`
             : `&where={"AND": [${activeFilter}]}`;
+        const orderByFilter = `&orderBy={"date":"asc"}`;
 
         const articles = await fetch(
-            `${apiUrl}/articles?rows=true${searchFilter}`,
+            `${apiUrl}/articles?rows=true${searchFilter}${orderByFilter}`,
             {
                 method: 'GET',
                 headers: {
@@ -101,11 +103,22 @@ export default function List() {
             : [];
 
     const columnsToRender = ['title', 'content'];
+    if (role !== 'STUDENT') {
+        columnsToRender.unshift('active');
+    }
     const columns = [
         ...(data[0]
             ? columnsToRender.map((item) => ({
                   name: item,
-                  selector: (row: any) => row[item],
+                  selector: (row: any) =>
+                      item === 'active'
+                          ? row[item]
+                              ? check
+                              : unCheck
+                          : row[item],
+                  width: item === 'active' ? '70px' : '',
+
+                  maxWidth: '300px',
               }))
             : []),
         {
@@ -132,6 +145,7 @@ export default function List() {
                     Create
                 </button>
             )}
+
             <DataTable
                 columns={columns}
                 data={data}
@@ -147,7 +161,7 @@ export default function List() {
                     {
                         when: (row) => !row.active,
                         style: {
-                            backgroundColor: '#ffcccc',
+                            backgroundColor: '#f0f0f0',
                         },
                     },
                 ]}

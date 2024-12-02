@@ -5,5 +5,13 @@ interface SearchProps {
 }
 export default function Search(props: SearchProps) {
     const { value, set } = props;
-    return <Input type="text" set={set} value={value} label="search"></Input>;
+    return (
+        <Input
+            type="text"
+            set={set}
+            value={value}
+            label=""
+            placeHolder="Search"
+        ></Input>
+    );
 }

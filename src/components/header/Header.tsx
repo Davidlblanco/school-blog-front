@@ -20,7 +20,7 @@ export default function Header() {
                     </a>
                 ) : null}
                 <a href="/myAccount" className="hover:underline">
-                    Minha Conta
+                    My account
                 </a>
                 <button
                     onClick={handleLogOut}

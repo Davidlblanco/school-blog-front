@@ -95,7 +95,7 @@ export default function MyAccount() {
             <form onSubmit={handleSubmit} className="space-y-4">
                 <Input
                     type="text"
-                    label="Nome"
+                    label="Name"
                     value={name}
                     set={setName}
                     required
@@ -109,20 +109,20 @@ export default function MyAccount() {
                 />
                 <Input
                     type="text"
-                    label="Nome de usuário"
+                    label="User name"
                     value={userName}
                     set={setUserName}
                     required
                 />
                 <Input
                     type="password"
-                    label="Nova senha"
+                    label="New Password"
                     value={userPassword}
                     set={setUserPassword}
                 />
                 <Input
                     type="password"
-                    label="Confirmar nova senha"
+                    label="Confirm new password"
                     value={confirmPassword}
                     set={setConfirmPassword}
                 />

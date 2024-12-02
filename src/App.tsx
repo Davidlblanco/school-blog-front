@@ -1,4 +1,3 @@
-import './App.css';
 import MainProvider from './contexts/useMainContext.tsx';
 import IsLoggedIn from './IisLoggedIn.tsx';
 

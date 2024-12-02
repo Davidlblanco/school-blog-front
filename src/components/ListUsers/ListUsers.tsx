@@ -8,6 +8,7 @@ import DataTable from 'react-data-table-component';
 import Search from '../Search/Search';
 import ModalRemoveItem from '../ModalRemoveItem/ModalRemoveItem';
 import AccessDenied from '../AccessDenied/AccessDenied';
+import { check, unCheck } from '../../utils/Icons';
 
 export default function ListUsers() {
     const navigate = useNavigate();
@@ -16,8 +17,9 @@ export default function ListUsers() {
     const [data, setData] = useState<User[]>([]);
 
     const getUsers = async () => {
+        const orderByFilter = `&orderBy={"name":"asc"}`;
         const users = await fetch(
-            `${apiUrl}/users?rows=true${
+            `${apiUrl}/users?rows=true${orderByFilter}${
                 searchUser
                     ? `&where={
                             "OR":[
@@ -61,12 +63,18 @@ export default function ListUsers() {
         );
     };
 
-    const columnsToRender = ['name', 'email', 'userName', 'type'];
+    const columnsToRender = ['active', 'name', 'email', 'userName', 'type'];
     const columns = [
         ...(data[0]
             ? columnsToRender.map((item) => ({
                   name: item,
-                  selector: (row: any) => row[item],
+                  selector: (row: any) =>
+                      item === 'active'
+                          ? row[item]
+                              ? check
+                              : unCheck
+                          : row[item],
+                  width: item === 'active' ? '70px' : '',
               }))
             : []),
         {
@@ -135,7 +143,7 @@ export default function ListUsers() {
                     {
                         when: (row) => !row.active,
                         style: {
-                            backgroundColor: '#ffcccc',
+                            backgroundColor: '#f0f0f0',
                         },
                     },
                 ]}

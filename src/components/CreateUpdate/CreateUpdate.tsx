@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Input from '../Input/Input';
 import { useMainContext } from '../../contexts/useMainContext';
@@ -14,6 +14,7 @@ export default function CreateUpdate() {
     const { jwtToken, setContextError, setContextSuccess, role } =
         useMainContext();
     const { id } = useParams();
+    const navigate = useNavigate();
 
     function createHeaders() {
         const headers = new Headers();
@@ -47,6 +48,7 @@ export default function CreateUpdate() {
             return;
         }
         setContextSuccess(`Artigo ${id ? 'atualizado' : 'criado'}!`);
+        navigate('/');
     }
 
     async function setInitialParameters() {
@@ -64,6 +66,7 @@ export default function CreateUpdate() {
             return;
         }
         setActive(article.active);
+        console.log('setActive', active, article.active);
         setTitle(article.title);
         setContent(article.content);
         if (article.filePath) setImageUrl(article.filePath);
@@ -86,21 +89,21 @@ export default function CreateUpdate() {
                 />
                 <Input
                     type="text"
-                    label="Título"
+                    label="Title"
                     value={title}
                     set={setTitle}
                     required
                 />
                 <Input
                     type="textarea"
-                    label="Conteúdo"
+                    label="Content"
                     value={content}
                     set={setContent}
                     required
                 />
                 <Input
                     type="text"
-                    label="Link de imagem"
+                    label="Image url"
                     value={imageUrl}
                     set={setImageUrl}
                 />
@@ -108,7 +111,7 @@ export default function CreateUpdate() {
                     type="submit"
                     className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
                 >
-                    Enviar
+                    Save
                 </button>
             </form>
         </div>

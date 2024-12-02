@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Input from '../Input/Input';
 import { useMainContext } from '../../contexts/useMainContext';
@@ -15,6 +15,7 @@ export default function CreateUpdateUser() {
     const { jwtToken, setContextError, setContextSuccess, role } =
         useMainContext();
     const { id } = useParams();
+    const navigate = useNavigate();
 
     function createHeaders() {
         const headers = new Headers();
@@ -50,7 +51,8 @@ export default function CreateUpdateUser() {
             setContextError(`Erro ao ${id ? 'atualizar' : 'criar'} usuário!`);
             return;
         }
-        setContextSuccess(`Usuário ${id ? 'atualizado' : 'criado'}!`);
+        setContextSuccess(`User ${id ? 'updated' : 'created'}!`);
+        navigate('/');
     }
 
     async function setInitialParameters() {
@@ -62,9 +64,7 @@ export default function CreateUpdateUser() {
         const user: User = await getUser.json();
         if (!getUser.ok) {
             console.error('ERROR:', user);
-            setContextError(
-                `Erro ao procurar o usuário a ser editado, id: ${id}`,
-            );
+            setContextError(`Error trying to find user, id: ${id}`);
             return;
         }
         setActive(user.active);
@@ -91,7 +91,7 @@ export default function CreateUpdateUser() {
                 />
                 <Input
                     type="text"
-                    label="Nome"
+                    label="Name"
                     value={name}
                     set={setName}
                     required
@@ -105,14 +105,14 @@ export default function CreateUpdateUser() {
                 />
                 <Input
                     type="text"
-                    label="Nome de usuário"
+                    label="User name"
                     value={userName}
                     set={setUserName}
                     required
                 />
                 <label className="block mb-4">
                     <p className="mb-2 text-sm font-medium text-gray-700">
-                        Tipo
+                        Type
                     </p>
                     <select
                         value={type}
@@ -129,7 +129,7 @@ export default function CreateUpdateUser() {
                     type="submit"
                     className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
                 >
-                    Enviar
+                    Save
                 </button>
             </form>
         </div>
