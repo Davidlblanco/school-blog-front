@@ -10,6 +10,7 @@ npm run dev
 2 Deploy
 
 Ao comitar na master o frontend fará deploy no github pages:
+https://davidlblanco.github.io/school-blog-front/
 
 link para github pages(ainda nao existe)
 
