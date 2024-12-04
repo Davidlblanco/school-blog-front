@@ -10,42 +10,49 @@ import MyAccount from '../MyAccount/MyAccount';
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <List />,
+        element: insertHeader(<List />),
     },
     {
         path: '/:id',
-        element: <View />,
+        element: insertHeader(<View />),
     },
     {
         path: '/createArticle',
-        element: <CreateUpdate />,
+        element: insertHeader(<CreateUpdate />),
     },
     {
         path: '/updateArticle/:id',
-        element: <CreateUpdate />,
+        element: insertHeader(<CreateUpdate />),
     },
     {
         path: '/admin/ListUsers',
-        element: <ListUsers />,
+        element: insertHeader(<ListUsers />),
     },
     {
         path: '/admin/UpdateUser/:id',
-        element: <CreateUpdateUser />,
+        element: insertHeader(<CreateUpdateUser />),
     },
     {
         path: '/admin/CreateUser',
-        element: <CreateUpdateUser />,
+        element: insertHeader(<CreateUpdateUser />),
     },
     {
         path: '/myAccount',
-        element: <MyAccount />,
+        element: insertHeader(<MyAccount />),
     },
 ]);
-export default function ContentHolder() {
+function insertHeader(element: React.ReactNode) {
     return (
         <>
             <Header />
-            <RouterProvider router={router}></RouterProvider>
+            {element}
+        </>
+    );
+}
+export default function ContentHolder() {
+    return (
+        <>
+            <RouterProvider router={router} />
             <Toast />
         </>
     );

@@ -28,10 +28,7 @@ export default function List() {
                 }`
             : `&where={"AND": [${activeFilter}]}`;
         const orderByFilter = `&orderBy={"date":"asc"}`;
-        console.log(
-            'api to call:',
-            `${apiUrl}/articles?rows=true${searchFilter}${orderByFilter}`,
-        );
+
         const articles = await fetch(
             `${apiUrl}/articles?rows=true${searchFilter}${orderByFilter}`,
             {
@@ -120,7 +117,7 @@ export default function List() {
                               : unCheck
                           : row[item],
                   width: item === 'active' ? '70px' : '',
-                  maxWidth: '300px',
+                  style: { maxWidth: '300px' },
               }))
             : []),
         {
@@ -135,7 +132,13 @@ export default function List() {
     function handleRowClick(row: Article) {
         navigate(`/${row.id}`);
     }
-
+    const customStyles = {
+        rows: {
+            style: {
+                cursor: 'pointer',
+            },
+        },
+    };
     return (
         <div className="p-4">
             <div className="flex">
@@ -154,7 +157,8 @@ export default function List() {
                 columns={columns}
                 data={data}
                 onRowClicked={handleRowClick}
-                className="bg-white shadow-md rounded"
+                className="bg-white shadow-md rounded "
+                customStyles={customStyles}
                 conditionalRowStyles={[
                     {
                         when: (row) => row.active,
