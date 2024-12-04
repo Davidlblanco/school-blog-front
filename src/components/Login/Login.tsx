@@ -7,8 +7,8 @@ import { JwtPayload } from '../../typings/projectTypes';
 
 export default function Login() {
     const { setJwtToken } = useMainContext();
-    const [userName, setUserName] = useState<string>('johndoe');
-    const [password, setPassword] = useState<string>('123456');
+    const [userName, setUserName] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
     const [errorMessage, setErrorMessage] = useState<string | undefined>();
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         setErrorMessage(undefined);
