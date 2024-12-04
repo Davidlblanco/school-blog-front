@@ -22,8 +22,6 @@ jobs:
               run: npm install
 
             - name: Build the project
-              env:
-                  VITE_API_URL: https://school-blog-back-1727553447.onrender.com
               run: npm run build
 
             - name: Deploy to GitHub Pages

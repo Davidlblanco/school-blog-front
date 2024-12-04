@@ -1,3 +1,4 @@
-export const apiUrl = window.location.href.includes('localhost')
-    ? 'http://localhost:3000' // sempre que rodar local é necessário o banco e backend local
-    : import.meta.env.VITE_API_URL;
+export const apiUrl =
+    import.meta.env.MODE === 'production'
+        ? 'https://school-blog-back-1727553447.onrender.com'
+        : 'http://localhost:3000';

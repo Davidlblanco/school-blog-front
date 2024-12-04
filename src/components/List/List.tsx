@@ -28,7 +28,10 @@ export default function List() {
                 }`
             : `&where={"AND": [${activeFilter}]}`;
         const orderByFilter = `&orderBy={"date":"asc"}`;
-
+        console.log(
+            'api to call:',
+            `${apiUrl}/articles?rows=true${searchFilter}${orderByFilter}`,
+        );
         const articles = await fetch(
             `${apiUrl}/articles?rows=true${searchFilter}${orderByFilter}`,
             {
