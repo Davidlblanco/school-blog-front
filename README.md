@@ -1,50 +1,49 @@
-# React + TypeScript + Vite
+School Blog Front
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Esta aplicação foi feita como trabalho de poss graduação da fiap. Trata-se de um blog onde professores interagem com alunos.
 
-Currently, two official plugins are available:
+1 Como rodar a aplicação em modo de desenvolvimento
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+npm i
+npm run dev
 
-## Expanding the ESLint configuration
+2 Deploy
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Ao comitar na master o frontend fará deploy no github pages:
 
-- Configure the top-level `parserOptions` property like this:
+link para github pages(ainda nao existe)
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+3 Fluxos da aplicação
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+-   ao entrar no app é verificado se a pagina possui um cookie "school-blog-jwt", este cookie contem o jwt que da permissão para as requisições no backend. Caso seja 'ADMIN', o usuário terá acesso a tudo caso seja 'TEACHER' ou 'STUDENT' terá acesso apenas aos respectivos componentes.
+-   Como as requisições necessitam do jwt, mesmo que alguem tente burlar o front, não seria possível ver informações que não são pertinentes pois todas as requisições são feitas com jwt
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+    -   Componentes
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+./App.tsx é o componente principal ele engloba os componentes ./contexts/MainProvider.tsx e ./isLoggedIn.tsx
+./contexts/MainProvider.tsx é o contexto global da aplicação, ali se concentram todas as variaveis úteis que serão compartilhadas entre componentes
+./isLoggedIn.tsx emgloba ContentHolder e Login caso o contexto diga que o usuario está logado é reinderizado o ContentHolder caso não a tela de login
+
+./components/ContentHolder este componente é o componente pai da parte logada, ele engloba o router e determina qual componente aparecerá em cada rota
+
+A aplicação tem 3 roles, tudo o que tem a ver com cadastro de usuário é disponibilizado apenas para o role 'ADMIN'. Caso voce tente entrar numa tela não permitida ao seu role o componente AccessDenied.tsx é reinderizado
+
+Os componentes permitidos apenas para 'ADMIN' são:
+./components/CreateUpdateUser >> cria e atualiza usuários no sistema e é assessado pela rota: /admin/UpdateUser/:id no caso de update /admin/CreateUser no caso de create
+
+./components/ListUsers >> lista usuários do sistema e é assessado pela rota: /admin/ListUsers
+
+Os componentes disponíveis para 'ADMIN' e 'TEACHER' são:
+./components/List >> lista os artigos do blog para os roles 'ADMIN' e 'TEACHER' nessa lista é possivel visualizar os botões update e remove, alem do icone que demonstra se o artigo está ativo
+disponivel em: '/'
+
+.components/updateArticle.tsx >> este componente é o formulário que cria ou atualiza artigos, disponivel em: '/updateArticle/:id' ou '/createArticle'
+
+Os componentes disponíveis para 'STUDENT','ADMIN' e 'TEACHER' são:
+./components/List >> Os botões de editar e remover são escondidos e os artigos inativos não serão listados para 'STUDENT' '/'
+
+./components/View.tsx >> visualização de artigos '/:id'
+
+./components/MyAccount.tsx >> este componente permite que cada usuário atualize os seus proprios dados cadastrais.'/myAccount'
+
+./utils >> ferramentas, variaveis e Hooks feitos especificamente para o projeto

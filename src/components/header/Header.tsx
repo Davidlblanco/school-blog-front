@@ -11,7 +11,7 @@ export default function Header() {
     return (
         <header className="bg-gray-800 text-white p-4 flex justify-between items-center">
             <a href="/" className="text-xl font-bold">
-                Logo
+                Blog
             </a>
             <nav className="space-x-4">
                 {role === 'ADMIN' ? (
