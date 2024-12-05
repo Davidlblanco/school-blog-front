@@ -74,7 +74,7 @@ export default function ListUsers() {
                               ? check
                               : unCheck
                           : row[item],
-                  width: item === 'active' ? '70px' : '',
+                  width: item === 'active' ? '70px' : '200px',
               }))
             : []),
         {

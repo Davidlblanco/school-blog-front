@@ -115,9 +115,13 @@ export default function List() {
                           ? row[item]
                               ? check
                               : unCheck
-                          : row[item],
-                  width: item === 'active' ? '70px' : '',
-                  style: { maxWidth: '300px' },
+                          : row[item].substring(0, 50),
+                  width:
+                      item === 'active'
+                          ? '70px'
+                          : item === 'content'
+                          ? ''
+                          : '200px',
               }))
             : []),
         {

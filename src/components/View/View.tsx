@@ -29,15 +29,15 @@ export default function View() {
             <h1 className="text-3xl font-bold mb-4 text-gray-800">
                 {article.title}
             </h1>
-            <div className="mb-4 flex">
+            <div className="mb-4 flex flex-wrap	">
                 {article.filePath ? (
                     <img
                         src={article.filePath}
                         alt={article.title}
-                        className="rounded mr-4"
+                        className="rounded mr-4 mb-4 w-full	max-w-xl h-auto"
                     />
                 ) : null}
-                <p className="text-gray-700">{article.content}</p>
+                <p className="text-gray-700 max-w-xl">{article.content}</p>
             </div>
             <p className="text-gray-500">By {article.creator.name}</p>
             <p className="text-gray-500">{article.date.split('T')[0]}</p>
