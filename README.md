@@ -1,50 +1,124 @@
-School Blog Front
+# School Blog Front
 
-Esta aplicação foi feita como trabalho de poss graduação da fiap. Trata-se de um blog onde professores interagem com alunos.
+Este repositório é parte de um projeto de pós-graduação da FIAP. O **School Blog** é uma plataforma onde professores interagem com alunos por meio de postagens em um blog.
 
-1 Como rodar a aplicação em modo de desenvolvimento
+## ⚡ 1. Quick Run
 
-npm i
+Caso não queira baixar o repositório do backend, você pode rodar o seguinte comando em um terminal separado para iniciar o backend via Docker:
+
+```bash
+docker run -p 3000:3000 davidlblanco/school-blog-back:latest
+```
+
+Em seguida, instale as dependências e inicie o frontend:
+
+```bash
+npm install
 npm run dev
+```
 
-2 Deploy
+> **Observação:** Este modo simula o backend de produção portanto salvará no banco de produção
 
-Ao comitar na master o frontend fará deploy no github pages:
-https://davidlblanco.github.io/school-blog-front/
+---
 
-link para github pages(ainda nao existe)
+## 🔧 2. Dev Run
 
-3 Fluxos da aplicação
+### Passo a passo:
 
--   ao entrar no app é verificado se a pagina possui um cookie "school-blog-jwt", este cookie contem o jwt que da permissão para as requisições no backend. Caso seja 'ADMIN', o usuário terá acesso a tudo caso seja 'TEACHER' ou 'STUDENT' terá acesso apenas aos respectivos componentes.
--   Como as requisições necessitam do jwt, mesmo que alguem tente burlar o front, não seria possível ver informações que não são pertinentes pois todas as requisições são feitas com jwt
+1. Baixe o repositório do backend:
+   [GitHub - school-blog-back](https://github.com/Davidlblanco/school-blog-back)
 
-    -   Componentes
+2. Siga as instruções no README do repositório do backend para executá-lo localmente.
 
-./App.tsx é o componente principal ele engloba os componentes ./contexts/MainProvider.tsx e ./isLoggedIn.tsx
-./contexts/MainProvider.tsx é o contexto global da aplicação, ali se concentram todas as variaveis úteis que serão compartilhadas entre componentes
-./isLoggedIn.tsx emgloba ContentHolder e Login caso o contexto diga que o usuario está logado é reinderizado o ContentHolder caso não a tela de login
+3. Inicie o frontend:
 
-./components/ContentHolder este componente é o componente pai da parte logada, ele engloba o router e determina qual componente aparecerá em cada rota
+```bash
+npm install
+npm run dev
+```
 
-A aplicação tem 3 roles, tudo o que tem a ver com cadastro de usuário é disponibilizado apenas para o role 'ADMIN'. Caso voce tente entrar numa tela não permitida ao seu role o componente AccessDenied.tsx é reinderizado
+> **Observação:** Para rodar este repositório em modo de desenvolvimento, é necessário executar o backend localmente.
 
-Os componentes permitidos apenas para 'ADMIN' são:
-./components/CreateUpdateUser >> cria e atualiza usuários no sistema e é assessado pela rota: /admin/UpdateUser/:id no caso de update /admin/CreateUser no caso de create
+---
 
-./components/ListUsers >> lista usuários do sistema e é assessado pela rota: /admin/ListUsers
+## 🚀 3. Deploy
 
-Os componentes disponíveis para 'ADMIN' e 'TEACHER' são:
-./components/List >> lista os artigos do blog para os roles 'ADMIN' e 'TEACHER' nessa lista é possivel visualizar os botões update e remove, alem do icone que demonstra se o artigo está ativo
-disponivel em: '/'
+Ao realizar um commit na branch `master`, o frontend é automaticamente deployado na Vercel.  
+Acesse a aplicação em: [https://school-blog-front.vercel.app/](https://school-blog-front.vercel.app/)
 
-.components/updateArticle.tsx >> este componente é o formulário que cria ou atualiza artigos, disponivel em: '/updateArticle/:id' ou '/createArticle'
+---
 
-Os componentes disponíveis para 'STUDENT','ADMIN' e 'TEACHER' são:
-./components/List >> Os botões de editar e remover são escondidos e os artigos inativos não serão listados para 'STUDENT' '/'
+## 📚 4. Fluxos da Aplicação
 
-./components/View.tsx >> visualização de artigos '/:id'
+![Fluxo do Deploy](./fluxo-blog-front.jpg)
 
-./components/MyAccount.tsx >> este componente permite que cada usuário atualize os seus proprios dados cadastrais.'/myAccount'
+-   **Autenticação:**  
+    Ao entrar na aplicação, é verificado se existe um cookie chamado `school-blog-jwt`. Este cookie contém o JWT que autoriza as requisições ao backend.
 
-./utils >> ferramentas, variaveis e Hooks feitos especificamente para o projeto
+    -   Se o JWT for do tipo `ADMIN`, o usuário terá acesso total.
+    -   Usuários com as roles `TEACHER` ou `STUDENT` terão acesso apenas aos componentes específicos de suas permissões.
+
+-   **Segurança:**  
+    Mesmo que alguém tente burlar o frontend, todas as requisições ao backend exigem um JWT válido, garantindo que apenas informações autorizadas sejam acessadas.
+
+---
+
+## 🛠️ Estrutura de Componentes
+
+### Componentes Principais
+
+-   **`./App.tsx`**:  
+    O componente principal que engloba:
+
+    -   **`./contexts/MainProvider.tsx`**: Contexto global da aplicação, onde são gerenciadas variáveis compartilhadas.
+    -   **`./isLoggedIn.tsx`**: Verifica se o usuário está logado. Caso esteja, renderiza `ContentHolder`; caso contrário, exibe a tela de login.
+
+-   **`./components/ContentHolder`**:  
+    Componente pai das páginas protegidas, responsável por renderizar os componentes corretos com base nas rotas.
+
+---
+
+### Regras de Acesso
+
+1. **ADMIN**:  
+   Permissão total, incluindo gerenciamento de usuários e artigos.
+
+    - **`./components/CreateUpdateUser`**:  
+      Cria e atualiza usuários.  
+      Rotas: `/admin/UpdateUser/:id` (update) e `/admin/CreateUser` (create).
+
+    - **`./components/ListUsers`**:  
+      Lista usuários do sistema.  
+      Rota: `/admin/ListUsers`.
+
+2. **ADMIN e TEACHER**:  
+   Permissão para gerenciar e visualizar artigos.
+
+    - **`./components/List`**:  
+      Lista artigos com opções de editar e remover.  
+      Rota: `/`.
+
+    - **`./components/UpdateArticle`**:  
+      Formulário para criar ou atualizar artigos.  
+      Rotas: `/updateArticle/:id` e `/createArticle`.
+
+3. **STUDENT, ADMIN e TEACHER**:  
+   Acesso limitado à visualização de artigos e gerenciamento de conta.
+
+    - **`./components/List`**:  
+      Exibe artigos sem opções de edição/remoção.  
+      Rota: `/`.
+
+    - **`./components/View`**:  
+      Exibe o conteúdo de um artigo.  
+      Rota: `/:id`.
+
+    - **`./components/MyAccount`**:  
+      Permite que cada usuário atualize seus próprios dados.  
+      Rota: `/myAccount`.
+
+---
+
+## 🔧 Ferramentas e Utilitários
+
+O repositório conta com ferramentas customizadas e hooks específicos, organizados na pasta `./utils`.
