@@ -52,7 +52,7 @@ export default function CreateUpdateUser() {
             return;
         }
         setContextSuccess(`User ${id ? 'updated' : 'created'}!`);
-        navigate('/');
+        navigate('/admin/ListUsers');
     }
 
     async function setInitialParameters() {
