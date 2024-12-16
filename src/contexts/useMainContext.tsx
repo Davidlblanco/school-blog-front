@@ -44,7 +44,6 @@ const ProvideMainContext = () => {
     const [openModalId, setOpenModalId] = useState<string>('');
     const [role, setRole] = useState<string>('');
 
-    useEffect(() => {}, [jwtToken]);
     useEffect(() => {
         const jwt = getJwtCookie('school-blog-jwt');
 
